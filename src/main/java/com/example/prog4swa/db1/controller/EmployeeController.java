@@ -7,9 +7,11 @@ import com.example.prog4swa.db1.model.Company;
 import com.example.prog4swa.db1.model.Employee;
 import com.example.prog4swa.db1.service.CompanyService;
 import com.example.prog4swa.db1.service.EmployeeService;
+import com.example.prog4swa.facade.EmployeeFacade;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +33,16 @@ public class EmployeeController implements WebMvcConfigurer {
     private final EmployeeService service;
     private final CompanyService companyService;
     private final EmployeeMapper mapper;
+
+    private final EmployeeFacade facade;
+
+    @Autowired
+    public EmployeeController(EmployeeFacade facade, EmployeeService service,CompanyService companyService, EmployeeMapper mapper) {
+        this.facade = facade;
+        this.service = service;
+        this.companyService = companyService;
+        this.mapper = mapper;
+    }
 
     @ModelAttribute("company")
     public Company sharedCompany() {
@@ -70,7 +82,7 @@ public class EmployeeController implements WebMvcConfigurer {
 
     @GetMapping("/employees/{id}")
     public ModelAndView getEmployeeSheet(@PathVariable int id) {
-        Employee employee = service.getEmployeeById(id);
+        Employee employee = service.getEmployeeWithSource(id);
         return new ModelAndView("employee-sheet")
                 .addObject("employeeSheet", employee);
     }

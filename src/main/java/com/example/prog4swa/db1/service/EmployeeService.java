@@ -2,6 +2,9 @@ package com.example.prog4swa.db1.service;
 
 import com.example.prog4swa.db1.model.Employee;
 import com.example.prog4swa.db1.repository.EmployeeRepository;
+import com.example.prog4swa.db2.model.DB2Employee;
+import com.example.prog4swa.db2.service.Db2EmployeService;
+import com.example.prog4swa.facade.EmployeeFacade;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +25,16 @@ public class EmployeeService {
     @Autowired
     private final EntityManager db1EntityManager;
 
+    @Autowired
+    private final EmployeeFacade facade;
+    private final Db2EmployeService db2EmployeService;
+
     public EmployeeService(EmployeeRepository repository,
-                           @Qualifier("db1EntityManagerFactory") EntityManager db1EntityManager) {
+                           @Qualifier("db1EntityManagerFactory") EntityManager db1EntityManager, EmployeeFacade facade, Db2EmployeService db2EmployeService) {
         this.repository = repository;
         this.db1EntityManager = db1EntityManager;
+        this.facade = facade;
+        this.db2EmployeService = db2EmployeService;
     }
 
     public List<Employee> getEmployees() {
@@ -41,8 +50,26 @@ public class EmployeeService {
         }
     }
 
+   public Employee getEmployeeWithSource(int id){
+        Employee employee = repository.findById(id).orElse(null);
+
+        if(employee != null){
+            DB2Employee db2Employee = facade.getEmployeeByCnapsIdFromDb2(employee.getCnaps());
+
+            if(db2Employee != null) {
+                employee.setCnaps(db2Employee.getCnaps());
+            }
+        }
+        return employee;
+    }
     public void addOrUpdateEmployee(Employee newEmployee){
         repository.save(newEmployee);
+
+        DB2Employee db2Employee = new DB2Employee();
+        db2Employee.setId(newEmployee.getId());
+        db2Employee.setCnaps(newEmployee.getCnaps());
+
+        db2EmployeService.addOrUpdateDb2Employee(db2Employee);
     }
 
     public boolean isSerialNumberExists(String serialNumber) {

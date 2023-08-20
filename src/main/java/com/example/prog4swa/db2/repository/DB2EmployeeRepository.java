@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DB2EmployeeRepository extends JpaRepository<DB2Employee, Integer> {
+    DB2Employee findByCnaps(String cnaps);
 }
