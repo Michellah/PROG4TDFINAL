@@ -1,6 +1,6 @@
 package com.example.prog4swa.validation;
 
-import com.example.prog4swa.repository.EmployeeRepository;
+import com.example.prog4swa.db1.repository.EmployeeRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

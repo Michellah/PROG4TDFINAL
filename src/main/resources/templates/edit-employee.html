@@ -174,7 +174,7 @@
             <div class="col-sm-10">
               <div
                 class="form-check form-check-inline"
-                th:each="gen : ${T(com.example.prog4swa.model.Employee.Gender).values()}"
+                th:each="gen : ${T(com.example.prog4swa.db1.model.Employee.Gender).values()}"
               >
                 <input
                   class="form-check-input"
@@ -205,9 +205,16 @@
                 rows="3"
                 name="phoneNumbers"
                 required
+                th:classappend="${#fields.hasErrors('phoneNumbers')} ? 'is-invalid' : ''"
               ></textarea>
-              <span class="text-muted">
-                Aller à la ligne pour ajouter d'autre numéro (N'oublier pas le code pays)</span
+              <span
+                class="invalid-feedback"
+                th:if="${#fields.hasErrors('phoneNumbers')}"
+                th:errors="*{phoneNumbers}"
+              ></span>
+              <span class="text-muted"
+                th:unless="${#fields.hasErrors('phoneNumbers')}"
+              >Aller à la ligne pour ajouter d'autre numéro, Format: Code pays + 10 chiffres</span
               >
             </div>
           </div>

@@ -63,14 +63,53 @@
     </nav>
 
     <div class="payslip">
-      <h2 class="p-2 text-center">List Employées</h2>
+      <h2 class="p-2 text-center">List Employés</h2>
       <form th:action="@{/employees}" method="get">
-        <div class="d-flex text-center">
+        <div class="d-flex justify-content-between">
+          <div class="mx-1 my-3 col-3">
+            <p>
+              Date d'emboche entre
+              <input
+                class="form-control"
+                type="date"
+                name="hireDate1"
+                th:value="${param.hireDate1}"
+              />
+              et
+              <input
+                class="form-control"
+                type="date"
+                name="hireDate2"
+                th:value="${param.hireDate2}"
+              />
+            </p>
+          </div>
+          <div class="mx-1 my-3 col-3">
+            <p>
+              Date de depart entre
+              <input
+                class="form-control"
+                type="date"
+                name="departureDate1"
+                th:value="${param.departureDate1}"
+              />
+              et
+              <input
+                class="form-control"
+                type="date"
+                name="departureDate2"
+                th:value="${param.departureDate2}"
+              />
+            </p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
           <div class="mx-1 my-3 col">
             <input
               class="form-control"
               type="text"
               name="lastName"
+              th:value="${param.lastName}"
               placeholder="nom"
             />
           </div>
@@ -79,6 +118,7 @@
               class="form-control"
               type="text"
               name="firstName"
+              th:value="${param.firstName}"
               placeholder="prenom"
             />
           </div>
@@ -86,7 +126,7 @@
             <select class="form-select" name="gender" aria-label="genre">
               <option class="text-muted" value="">genre</option>
               <option
-                th:each="gender : ${T(com.example.prog4swa.model.Employee.Gender).values()}"
+                th:each="gender : ${T(com.example.prog4swa.db1.model.Employee.Gender).values()}"
                 th:value="${gender}"
                 th:text="${gender}"
               ></option>
@@ -97,37 +137,28 @@
               class="form-control"
               type="text"
               name="position"
+              th:value="${param.function}"
               placeholder="fonction"
-            />
-          </div>
-          <div class="mx-1 my-3 col">
-            <input
-              class="form-control"
-              type="date"
-              name="hireDate"
-              placeholder="date d embauche"
-            />
-          </div>
-          <div class="mx-1 my-3 col">
-            <input
-              class="form-control"
-              type="date"
-              name="departureDate"
-              placeholder="date de depart"
             />
           </div>
           <div class="mx-1 my-3 col">
             <select class="form-select" name="countryCode" aria-label="countryCode">
               <option class="text-muted" value="">code pays</option>
               <option
-                      th:each="code : ${T(com.example.prog4swa.model.Employee.CountryCode).values()}"
-                      th:value="${code.getCode()}"
-                      th:text="${code.getCode()}"
+                th:each="code : ${T(com.example.prog4swa.db1.model.Employee.CountryCode).values()}"
+                th:value="${code.getCode()}"
+                th:text="${code.getCode()}"
               ></option>
             </select>
           </div>
-          <div class="mx-1 my-3 col">
+          <div class="mx-1 my-3">
             <button class="btn btn-primary" type="submit">Search</button>
+          </div>
+          <div class="mx-1 my-3">
+            <button class="btn btn-secondary" type="reset">
+              <a class="text-decoration-none text-white" th:href="@{/employees(lastName='', firstName='', gender='', position='', hireDate1='', hireDate2='', departureDate1='', departureDate2='', countryCode='', sort='id,asc')}">
+                Reset</a>
+            </button>
           </div>
         </div>
       </form>
@@ -140,13 +171,13 @@
                 <div class="btn-group">
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='id,asc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='id,asc')}"
                   >
                     <i class="bi bi-caret-up-fill"></i>
                   </a>
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='id,desc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='id,desc')}"
                   >
                     <i class="bi bi-caret-down-fill"></i>
                   </a>
@@ -159,13 +190,13 @@
                 <div class="btn-group">
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='lastName,asc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='lastName,asc')}"
                   >
                     <i class="bi bi-caret-up-fill"></i>
                   </a>
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='lastName,desc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='lastName,desc')}"
                   >
                     <i class="bi bi-caret-down-fill"></i>
                   </a>
@@ -178,13 +209,13 @@
                 <div class="btn-group">
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='firstName,asc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='firstName,asc')}"
                   >
                     <i class="bi bi-caret-up-fill"></i>
                   </a>
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='firstName,desc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='firstName,desc')}"
                   >
                     <i class="bi bi-caret-down-fill"></i>
                   </a>
@@ -197,13 +228,13 @@
                 <div class="btn-group">
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='gender,asc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='gender,asc')}"
                   >
                     <i class="bi bi-caret-up-fill"></i>
                   </a>
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='gender,desc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='gender,desc')}"
                   >
                     <i class="bi bi-caret-down-fill"></i>
                   </a>
@@ -216,13 +247,13 @@
                 <div class="btn-group">
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='position,asc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='position,asc')}"
                   >
                     <i class="bi bi-caret-up-fill"></i>
                   </a>
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='position,desc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='position,desc')}"
                   >
                     <i class="bi bi-caret-down-fill"></i>
                   </a>
@@ -235,13 +266,13 @@
                 <div class="btn-group">
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='hireDate,asc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='hireDate,asc')}"
                   >
                     <i class="bi bi-caret-up-fill"></i>
                   </a>
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='hireDate,desc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='hireDate,desc')}"
                   >
                     <i class="bi bi-caret-down-fill"></i>
                   </a>
@@ -254,13 +285,13 @@
                 <div class="btn-group">
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='departureDate,asc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='departureDate,asc')}"
                   >
                     <i class="bi bi-caret-up-fill"></i>
                   </a>
                   <a
                     class="link-success"
-                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort='departureDate,desc')}"
+                    th:href="@{/employees(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort='departureDate,desc')}"
                   >
                     <i class="bi bi-caret-down-fill"></i>
                   </a>
@@ -298,32 +329,32 @@
     </div>
     <div class="d-flex justify-content-around m-3">
       <div>
-        <a class="btn btn-success" href="/employees/add">Ajouter un employee</a>
+        <a class="btn btn-success" th:href="@{/employees/add}">Ajouter un employé</a>
       </div>
       <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
           <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
-            <a class="page-link" th:href="@{/employees(page=1, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort=${param.sort})}">Première</a>
+            <a class="page-link" th:href="@{/employees(page=1, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort=${param.sort})}">Première</a>
           </li>
           <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
-            <a class="page-link" th:href="@{/employees(page=${currentPage - 1}, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort=${param.sort})}">&laquo;</a>
+            <a class="page-link" th:href="@{/employees(page=${currentPage - 1}, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort=${param.sort})}">&laquo;</a>
           </li>
           <li class="page-item" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}"
               th:classappend="${currentPage == pageNumber} ? 'active' : ''">
-            <a class="page-link" th:href="@{/employees(page=${pageNumber}, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort=${param.sort})}" th:text="${pageNumber}"></a>
+            <a class="page-link" th:href="@{/employees(page=${pageNumber}, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort=${param.sort})}" th:text="${pageNumber}"></a>
           </li>
           <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled' : ''">
-            <a class="page-link" th:href="@{/employees(page=${currentPage + 1}, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort=${param.sort})}">&raquo;</a>
+            <a class="page-link" th:href="@{/employees(page=${currentPage + 1}, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort=${param.sort})}">&raquo;</a>
           </li>
           <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled' : ''">
-            <a class="page-link" th:href="@{/employees(page=${totalPages}, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort=${param.sort})}">Dernière</a>
+            <a class="page-link" th:href="@{/employees(page=${totalPages}, lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort=${param.sort})}">Dernière</a>
           </li>
         </ul>
       </nav>
       <div>
         <a
           class="btn btn-success"
-          th:href="@{/export/csv(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate=${param.hireDate}, departureDate=${param.departureDate}, countryCode=${param.countryCode}, sort=${param.sort})}"
+          th:href="@{/export/csv(lastName=${param.lastName}, firstName=${param.firstName}, gender=${param.gender}, position=${param.position}, hireDate1=${param.hireDate1}, hireDate2=${param.hireDate2}, departureDate1=${param.departureDate1}, departureDate2=${param.departureDate2}, countryCode=${param.countryCode}, sort=${param.sort})}"
           >Exporter en CSV</a
         >
       </div>
