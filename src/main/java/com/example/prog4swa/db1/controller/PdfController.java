@@ -18,6 +18,8 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,8 +38,12 @@ public class PdfController {
     public ResponseEntity<byte[]> generateEmployeePdf(@PathVariable int id) throws Exception {
         Employee employee = employeeService.getEmployeeById(id);
 
+        LocalDate birthdate = employee.getBirthdate();
+        LocalDate currentDate = LocalDate.now();
+        int age = Period.between(birthdate, currentDate).getYears();
         Map<String, Object> model = new HashMap<>();
         model.put("employee", employee);
+        model.put("age", age);
 
         String htmlContent = loadHtmlTemplate("employee-sheet.html");
 
