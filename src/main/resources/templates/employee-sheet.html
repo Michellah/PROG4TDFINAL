@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
+  <head th:charset="UTF-8">
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -104,47 +104,7 @@
               <strong>Date de Naissance:</strong>
               <span th:text="${employeeSheet.birthdate}"></span>
             </div>
-            <div class="mb-1 d-flex justify-content-between">
-              <strong>Genre:</strong>
-              <span th:text="${employeeSheet.gender}"></span>
-            </div>
-            <div class="mb-1 d-flex justify-content-between">
-              <strong>Téléphones:</strong>
-              <div class="d-flex flex-column">
-                <div
-                  th:each="number : ${employeeSheet.phoneNumbers}"
-                  class="text-end col"
-                >
-                  <span th:text="${number}"></span>
-                </div>
-              </div>
-            </div>
-            <div class="mb-1 d-flex justify-content-between">
-              <strong>Adresse:</strong>
-              <span th:text="${employeeSheet.address}"></span>
-            </div>
-            <div
-              class="mb-1 d-flex justify-content-between"
-              th:if="${not #lists.isEmpty(employeeSheet.emails)}"
-            >
-              <strong>Email Personnel:</strong>
-              <span th:text="${employeeSheet.emails[0]}"></span>
-            </div>
-            <div
-              class="mb-1 d-flex justify-content-between"
-              th:if="${not #lists.isEmpty(employeeSheet.emails)}"
-            >
-              <strong>Email Professionnel:</strong>
-              <span th:text="${employeeSheet.emails[1]}"></span>
-            </div>
-            <div class="mb-1 d-flex justify-content-between">
-              <strong>Fonction:</strong>
-              <span th:text="${employeeSheet.position}"></span>
-            </div>
-            <div class="mb-1 d-flex justify-content-between">
-              <strong>Enfant à charge:</strong>
-              <span th:text="${employeeSheet.dependentChildren}"></span>
-            </div>
+
             <div class="mb-1 d-flex justify-content-between">
               <strong>Date d'embauche:</strong>
               <span th:text="${employeeSheet.hireDate}"></span>
@@ -160,32 +120,63 @@
               <strong>Numéro CNAPS:</strong>
               <span th:text="${employeeSheet.cnaps}"></span>
             </div>
-            <div class="py-1">
-              <h4 class="card-title">CIN</h4>
-            </div>
-            <div class="mb-1 d-flex justify-content-between">
-              <strong>Numéro:</strong>
-              <span th:text="${employeeSheet.cinNumber}"></span>
-            </div>
-            <div class="mb-1 d-flex justify-content-between">
-              <strong>Date de délivrance:</strong>
-              <span th:text="${employeeSheet.cinIssuanceDate}"></span>
-            </div>
-            <div class="mb-1 d-flex justify-content-between">
-              <strong>Lieu de délivrance:</strong>
-              <span th:text="${employeeSheet.cinIssuancePlace}"></span>
-            </div>
             <div class="py-3">
-              <button class="btn btn-success" type="button">
-                <a
-                  class="text-decoration-none text-light"
-                  th:href="@{/employees/payslip/{id}(id=${employeeSheet.id})}"
-                  >Fiche de paye</a
-                >
-              </button>
+
+              <div class="payslip">
+                <table class="table">
+                  <thead class="table-dark">
+                  <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col">Montant</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td scope="row">Salaire:</td>
+                    <td scope="row" th:text="${payslip.salary}"></td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Benefices:</td>
+                    <td scope="row" th:text="${payslip.benefits}"></td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Indemnites:</td>
+                    <td scope="row" th:text="${payslip.allowances}"></td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Cotisations de sécurite sociale:</td>
+                    <td
+                            scope="row"
+                            th:text="${payslip.socialSecurityContributions}"
+                    ></td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Revenu imposable:</td>
+                    <td scope="row" th:text="${payslip.taxableIncome}"></td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Taux d'imposition:</td>
+                    <td scope="row" th:text="${payslip.taxRate}"></td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Revenu net:</td>
+                    <td scope="row" th:text="${payslip.netIncome}"></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <div class="payslip-summary">
+                  <span>Total Revenu net: </span>
+                  <span th:text="${payslip.netIncome}"></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="text-center mt-3">
+        <a class="btn btn-primary" th:href="@{/pdf/employee/{id}(id=${employeeSheet.id})}" target="_blank">
+          Générer PDF
+        </a>
       </div>
     </div>
 

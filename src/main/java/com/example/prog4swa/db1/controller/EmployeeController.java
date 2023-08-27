@@ -83,9 +83,13 @@ public class EmployeeController implements WebMvcConfigurer {
     @GetMapping("/employees/{id}")
     public ModelAndView getEmployeeSheet(@PathVariable int id) {
         Employee employee = service.getEmployeeWithSource(id);
+        Employee employee1 = service.getEmployeeById(id);
         return new ModelAndView("employee-sheet")
-                .addObject("employeeSheet", employee);
+                .addObject("employeeSheet", employee)
+                .addObject("payslip", employee1);
     }
+
+
 
     @GetMapping("/employees/add")
     public String showAddEmployeeForm(AddEmployeeModel addEmployeeModel) {
